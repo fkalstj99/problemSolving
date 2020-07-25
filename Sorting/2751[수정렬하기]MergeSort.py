@@ -11,8 +11,10 @@ def merge(left, right) :
         else :
             v.append(right[j])
             j+=1
-    if i==len(left) : v = v + right[j:len(right)]
-    if j == len(right): v = v + left[i:len(left)]
+    if i==len(left) : 
+        v = v + right[j:len(right)]
+    if j == len(right): 
+        v = v + left[i:len(left)]
     return v
  
 def merge_sort(v) :
