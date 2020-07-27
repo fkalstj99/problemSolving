@@ -62,7 +62,7 @@ class Node:
 
 class Stack:
   def __init__(self):
-    self.top = Node
+    self.top = None
     self.size = 0
   
   def is_empty(self):

@@ -18,6 +18,7 @@ for i in range(len(arr)):
     result += 1
 
 
-    
-
 print(result)
+
+
+
