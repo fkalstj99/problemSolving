@@ -9,71 +9,71 @@ class Node:
     self.prev = None
    
 
-
-
-
-
 class DLinkedList:
-    def __init__(self):
-        self.head = None
-        self.tail = None
-    
- 
-    def Insert(self, item):
-        newNode = Node(item)
-        if self.head == None:
-            self.head = newNode
-            self.head.next = self.tail
-            self.tail.prev = self.head
-        else:
-            self.tail.prev = newNode
-            newNode.next = self.tail
-            newNode.prev = self.tail.prev.prev
+  def __init__(self, str):
+    self.head = Node(0)
+    begin = self.head
+    for s in str:
+      t = Node(s)
+      t.prev = begin
+      begin.next = t
+      begin = t
+    self.cursor = begin
 
-    def moveRight(self):
-        if self.tail == None:
-            return
-        
-        self.tail = self.tail.next
+  def L(self):
+    if self.cursor.prev:
+      self.cursor = self.cursor.prev
+  
+  def D(self):
+    if self.cursor.next:
+      self.cursor = self.cursor.next
 
-    def moveLeft(self):
-        if self.tail.prev == self.head:
-            return
-        
-        self.tail = self.tail.prev
-
-    def Delete(self):
-        if self.tail.prev == self.head:
-            return
-        
-        self.tail.prev = self.tail.prev.prev
-        self.tail.next = self.tail.prev.next
-        del self.tail.prev
-    
-    def Print(self):
-      temp = self.head
-      while temp.next != None:
-        print(temp.data)
-        temp = temp.next  
-
-str = sys.stdin.readline()
-num = int(sys.stdin.readline())
-
-DLList = DLinkedList(str)
+  def B(self):
+    prev = self.cursor.prev
+    next = self.cursor.next
+    if prev:
+      prev.next = next
+      if next:
+        next.prev = prev 
+      self.cursor = prev
+  
+  def P(self, item):
+    t = Node(item)
+    prev = self.cursor
+    next = self.cursor.next
+    self.cursor = t
+    if prev:
+      prev.next = self.cursor
+    if next:
+      next.prev = self.cursor
+    self.cursor.prev = prev
+    self.cursor.next = next
+  
+  def print(self):
+    self.cursor=self.head.next
+    while self.cursor:
+      print(self.cursor.data)
+      self.cursor=self.cursor.next  
 
 
-for i in range(num):
+
+
+
+
+str = sys.stdin.readline().rstrip()
+print=sys.stdout.write
+DLList = DLinkedList(str())
+for i in range(int(input())):
   input_split = sys.stdin.readline().split()
   operator = input_split[0]
 
   if operator=="L":
-    DLList.moveLeft()
+    DLList.L()
   elif operator =="D":
-    DLList.moveRight()
+    DLList.D()
   elif operator == "B":
-    DLList.Delete()
+    DLList.B()
   else:
-    DLList.Insert(input_split[1])
+    DLList.P(input_split[1])
 
-
-#tail을 커서의 역할로 사용
+DLList.print()
