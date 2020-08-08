@@ -35,8 +35,15 @@ inputList.sort()
  
 combStr = []
 index = 0
- 
+
+print(inputList)
 solution(L, inputList, combStr, index)
+
+
+
+
+
+https://covenant.tistory.com/124
 
 
 
@@ -57,6 +64,11 @@ for s in combinations(a, L):
             print(passwd)
 
 
+ https://rebas.kr/688 
+
+ 
+
+                   
 
 
 
@@ -65,7 +77,7 @@ for s in combinations(a, L):
 
 
 
-from itertools import permutations,combinations
+
 items = [1,2,3,4,5]
 print(list(permutations(items,2)))
 output-> [(1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (2, 3), (2, 4), (2, 5), 
@@ -89,5 +101,4 @@ AB, AC, AD
 
 
 
-permutation(순열) vs combinations(조합)
 
