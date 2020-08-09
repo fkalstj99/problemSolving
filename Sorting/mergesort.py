@@ -22,7 +22,7 @@ def merge_sort(arr):
         while l < mid:
             temp.append(arr[l])
             l += 1
-        while h < high:
+        while h < mid:
             temp.append(arr[h])
             h += 1
 

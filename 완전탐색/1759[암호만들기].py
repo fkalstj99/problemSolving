@@ -23,7 +23,8 @@ def solution(L, inputList, combStr, index):
  
     if index >= len(inputList): 
         return;
- 
+
+# 무한히 재귀가 깊어질 수는 없고 inputList 길이 보다 깊어질 수 없습니다.
     solution(L, inputList, combStr+list(inputList[index]), index + 1)
     solution(L, inputList, combStr, index + 1)
  

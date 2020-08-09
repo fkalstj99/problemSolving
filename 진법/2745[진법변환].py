@@ -10,3 +10,6 @@ for i, j in enumerate(n):
     result += (ord(j) -55)*(N**(len(n)- i - 1)) 
 
 print(result)
+
+
+#B진법 수 N이 주어진다. -> 10진법으로 변환
