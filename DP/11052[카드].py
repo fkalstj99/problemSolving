@@ -8,3 +8,5 @@ for i in range(1,N+1):
         dp[i] = max(dp[i], dp[i-k] + p[k])
         print(dp[i])
 print(dp[i])
+
+#https://hororolol.tistory.com/364

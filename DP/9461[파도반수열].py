@@ -12,3 +12,8 @@ ts = int(input())
 
 for i in range(ts):
   print(dp[int(input())])
+
+
+  # dp[i+3] = dp[i] + dp[i+1]
+
+  
