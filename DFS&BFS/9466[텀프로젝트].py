@@ -1,38 +1,29 @@
-import sys
-sys.setrecursionlimit(111111)
+testCase = int(input())
 
-input = sys.stdin.readline
-
-def DFS(i):
+def DFS(start):
   global result
-  visited[i] = True
-  number = numbers[i]
-  cycle.append(i)
-  if visited[number]:
-    if number in cycle:
-      result += cycle[cycle.index(number):]
+  visit[start] = True
+  nxt = adj_list[start]
+  cycle.append(start)
+  if visit[nxt]:
+    if nxt in cycle:
+      result += cycle[cycle.index(nxt):]
       return
   else:
-    DFS(number)
+    DFS(nxt)
 
 
 
-
-
-
-
-testCase = int(input())
 
 for _ in range(testCase):
   N = int(input())
-  numbers = [0] + list(map(int, input().split()))
-  visited = [False for i in range(N+1)]
+  adj_list =[0] + list(map(int, input().split()))
+  visit = [False]*(N+1)
   result = []
 
   for i in range(1, N+1):
-    if not visited[i]:
+    if visit[i] == False:
       cycle = []
       DFS(i)
-
   print(N - len(result))
-
+ 

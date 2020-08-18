@@ -1,53 +1,56 @@
-import sys
 from collections import deque
-sys.setrecursionlimit(10**6)
 
-n = int(input())
-Map = [list(map(int, input().split())) for _ in range(n)]
-check = [[False]*n for _ in range(n)]
-dx, dy = [-1, 1, 0, 0], [0, 0, -1, 1]
-ans, group_num = 10**9, 1
 
-def DFS_grouping(x, y):
-    check[x][y] = True
-    Map[x][y] = group_num
+def DFS_grouping(y,x):
+    Map[y][x] = group_num
     for i in range(4):
-        nx, ny = x+dx[i], y+dy[i]
-        if 0 <= nx < n and 0 <= ny < n:   
-          if check[nx][ny] == False and Map[nx][ny]:
-          #안들렸고 바다가 아니라면
-             DFS_grouping(nx,ny)
+      ny = y + dy[i]
+      nx = x + dx[i]
+      if 0<=ny<N and 0<=nx<N and Map[ny][nx] == 1:
+        DFS_grouping(ny,nx) 
 
-def BFS_bridge(z):
-    global ans
-    dist = [[-1]*n for _ in range(n)]
-    q = deque()
-    for i in range(n):
-        for j in range(n):
-            if Map[i][j] == z:
-                q.append((i, j))
-                dist[i][j] = 0
-    while q:
-        x, y = q.popleft()
-        for i in range(4):
-            nx, ny = x+dx[i], y+dy[i]
-            if nx < 0 or nx >= n or ny < 0 or ny >= n:
-                continue
-            if Map[nx][ny] and Map[nx][ny] != z:
-               #다른 섬이 존재하고 다른 그룹일때
-                ans = min(ans, dist[x][y])
-                return
-            if not Map[nx][ny] and dist[nx][ny] == -1:
-                #조사되지 않았고 바다일때
-                dist[nx][ny] = dist[x][y]+1
-                q.append((nx, ny))
 
-for i in range(n):
-    for j in range(n):
-        if not check[i][j] and Map[i][j]:
-            DFS_grouping(i, j)
-            group_num += 1
-for i in range(1, group_num+1):
-    BFS_bridge(i)
+def BFS_bridge(start):
+  queue = deque()
+  global ans
+  visit = [[-1]*N for _ in range(N)]
+  for i in range(N):
+    for j in range(N):
+      if Map[i][j] == start:
+        queue.append([i,j]) 
+        visit[i][j] = 0
+
+  while queue:
+    y,x=queue.popleft()
+    for i in range(4):
+        ny = y + dy[i]
+        nx = x + dx[i]
+        if 0<=ny<N and 0<=nx<N:
+          if Map[ny][nx] and Map[ny][nx] != start:
+            ans = min(ans, visit[y][x])
+            return 
+          if not Map[ny][nx] and visit[ny][nx] == -1:
+              visit[ny][nx] = visit[y][x] + 1
+              queue.append([ny,nx])
+
+
+
+
+
+N = int(input())
+
+Map = [list(map(int,input().split())) for _ in range(N)]
+dx = [1,-1,0,0]
+dy = [0,0,1,-1]
+group_num = 1
+ans = 10**9
+for i in range(N):
+  for j in range(N):
+    if not Map[i][j]:
+      group_num += 1
+      DFS_grouping(i,j)
+
+for i in range(2, group_num+1):
+  BFS_bridge(i)
+
 print(ans)
-

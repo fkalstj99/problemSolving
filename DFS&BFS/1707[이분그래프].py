@@ -1,45 +1,43 @@
-import sys
-input = sys.stdin.readline
+from collections import deque
 
+testCase = int(input())
 
-def BFS_binary(v, visited, color):
-  queue = [v]
-  visited[v] = True
-  color[v] = 1
+def BFS(start, visit, color):
+  queue = deque()
+  queue.append(start)
+  visit[start] = True
+  color[start] = 2
   while queue:
-    current = queue.pop(0)
-    for next in adj_list[current]:
-      if not visited[next]:
-        queue.append(next)
-        color[next] = 3 - color[current]
-        visited[next] = True
-      else:
-        if color[current] == color[next]:
-          return False
+    current = queue.popleft()
+    for nxt in adj_list[current]:
+      if not visit[nxt]:
+        color[nxt] = 3 - color[current]
+        visit[nxt] = True
+        queue.append(nxt)
+      if color[current] == color[nxt]:
+        return False
+
   return True
 
 
+for _ in range(testCase):
+  N, M = map(int,input().split())
+  adj_list = [[] for _ in range(N+1)] 
+  for i in range(M):
+    lst = map(int,input().split())
+    adj_list[lst[0]].append(lst[1])
+    adj_list[lst[1]].append(lst[0])
 
-testCase = int(input())
-for i in range(testCase):
-  N, M = map(int, input().split())
-  adj_list = [[] for _ in range(N + 1)]
-
-  for j in range(M):
-    a ,b = map(int, input().split())
-    adj_list[a].append(b)
-    adj_list[b].append(a)
-
-  visited = [False for _ in range(N+1)]
-  color = [0 for _ in range(N + 1)]
+  visit = [False] * (N+1)
+  color = [1] * N+1
   flag = True
 
-  for node in range(1, N+1):
-    if visited[node] == False:
-      if BFS_binary(node, visited, color) == False:
+  for start in range(1, N+1):
+    if visit[start] == False:
+      if BFS(start, visit, color) == False:
         flag = False
         break
-  
+
   if flag == False:
     print("NO")
   else:

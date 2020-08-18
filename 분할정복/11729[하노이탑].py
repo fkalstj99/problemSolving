@@ -4,12 +4,8 @@ input = sys.stdin.readline
 
 
 
-
-
 def hanoi(N, A, B, C):
-    if N == 1:
-        print(A, C)
-    else:
+    if N > 0:
         hanoi(N-1, A, C, B )
         print(A, C)
         hanoi(N-1, B , A, C)

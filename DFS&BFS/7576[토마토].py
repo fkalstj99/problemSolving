@@ -1,48 +1,41 @@
-import sys
 from collections import deque
 
-input = sys.stdin.readline
-dx = [1, -1, 0, 0]
-dy = [0, 0, 1, -1]
-
-
 def BFS():
-    days = -1
+  days = 0
+  while queue:
+    for _ in range(len(queue)):
+        ay, ax = queue.popleft()
+        for i in range(4):
+          ny = ay + dy[i]
+          nx = ax + dx[i]
+          if 0<= ny < N and 0 <= nx < M and Map[ny][nx] == 0:
+            Map[ny][nx] = Map[ay][ax] + 1
+            queue.append([ny,nx])
+            days = Map[ny][nx]
   
-    while queue:
-        days += 1
-        for _ in range(len(queue)):
-            x,y = queue.popleft()
-    
-    
-            for i in range(4):
-                nx = x + dx[i]
-                ny = y + dy[i]
-                if (0 <= nx < H) and (0 <= ny < W) and (Map[nx][ny] == 0):
-                    Map[nx][ny] = Map[x][y] + 1
-                    queue.append([nx,ny])
-  
-        for i in range(H):
-            for j in range(W):
-                if Map[i][j] == 0:
-                return -1
+  for i in range(N):
+    for j in range(M):
+      if Map[i][j] == 0:
+        return -1
 
-        return days
+  return days - 1
 
 
 
 
-W, H = map(int, input().split())
-Map = [list(map(int,input().split())) for _ in range(H)]
+
+M, N = map(int,input().split())
+
+Map = [list(map(int,input().split())) for _ in range(N)]
+dx , dy = (1,-1,0,0), (0,0,1,-1)
 queue = deque()
-
-for i in range(H):
-  for j in range(W):
+for i in range(N):
+  for j in range(M):
     if Map[i][j] == 1:
-          queue.append([i,j])
-
-
+       queue.append([i,j])
+#이렇게 해줘야 하는 이유 => 한번씩 교차로 실행되어야 한다.
 
 print(BFS())
+
 
 
