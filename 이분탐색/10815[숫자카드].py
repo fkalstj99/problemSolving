@@ -1,29 +1,24 @@
-import sys
-
-input = sys.stdin.readline
-
 N = int(input())
-num_card = list(map(int, input().split()))
-num_card.sort()
+card = list(map(int,input().split()))
 M = int(input())
-check_card = list(map(int, input().split()))
+check = list(map(int, input().split()))
+card.sort()
 
+for num in check:
+  start , end = 0, len(card) - 1
+  while True:
+    mid = (start + end)//2
+    if start > end:
+      print("0", end=" ")
+      break
+    if num == card[mid]:
+      print("1", end = " ")
+      break
+    elif num > card[mid]:
+      start = mid + 1
+    else:
+      end = mid - 1
 
-
-for num in check_card:
-    low, high = 0,N-1
-    while True:
-        if low > high:
-            print("0", end = " ")
-            break
-        mid = (low + high)//2
-        if num == num_card[mid]:
-            print("1", end=" ")
-            break
-        elif num > num_card[mid]:
-            low = mid + 1
-        else:
-            high = mid - 1
 
 #메모리106896	시간3868
 

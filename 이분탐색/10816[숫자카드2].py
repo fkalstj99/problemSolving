@@ -1,37 +1,31 @@
-import sys
 from collections import Counter
 
-input = sys.stdin.readline
+def binary_search(num):
+  start , end = 0 , len(card) - 1
+  while start <= end:
+    mid = (start + end)//2
 
-
-def binarySearch(key):
-      low, high = 0 , len(card) -1
-
-      while low <= high:
-            mid = (low+ high) //2
-            if key == card[mid]:
-               return 1
-            elif key > card[mid]:
-                low = mid + 1
-            else:
-                high = mid - 1
+    if card[mid] == num:
+      return 1
+    if num > card[mid]:
+      start = mid + 1
+    else:
+      end = mid - 1
   
-      return -1
-
+  return - 1
 
 
 
 N = int(input())
-card = list(map(int, input().split()))
+card = list(map(int,input().split()))
 M = int(input())
 check = list(map(int, input().split()))
 card.sort()
-
 count = Counter(card)
 result = []
 
 for i in check:
-    if binarySearch(i):
-        result.append(count[i])
+  if binary_search(i):
+    result.append(count[i])
 
 print(*result)

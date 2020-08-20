@@ -12,8 +12,8 @@ while start <= end: #적절한 벌목 높이를 찾는 알고리즘
     result = 0
 
     for i in trees:#벌목된 나무 총합
-        if i >= mid:
-            result += i -mid
+      if i >= mid:
+        result += i - mid
 
         #벌목 높이를 이분탐색
     if result >= M:
@@ -21,6 +21,8 @@ while start <= end: #적절한 벌목 높이를 찾는 알고리즘
     else:
         end = mid - 1
 print(end)
+
+
 
  
 #가장 짧은 길이 1을 start로, 나무 중 가장 긴 길이를 end로 둔다.
