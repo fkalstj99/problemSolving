@@ -1,26 +1,31 @@
+import sys
+
+sys.setrecursiontime(10**9)
+
 n = int(input())
-picture = [[' ']*((n-1)*2+1) for i in range(n)]
-def draw(k,x,y):
-    if k==3:
-        picture[y][x] = '*'
-        picture[y+1][x+1] = '*'
-        picture[y+1][x-1] = '*'
-        picture[y+2][x+1] = '*'
-        picture[y+2][x-1] = '*'
-        picture[y+2][x] = '*'
-        picture[y+2][x-2] = '*'
-        picture[y+2][x+2] = '*'
-        return
-    draw(k//2,x,y)
-    draw(k//2,x-k//2,y+k//2)
-    draw(k//2,x+k//2,y+k//2)
 
-draw(n,n-1,0)
+Map = [" "*(2*n) for _ in range(n)]
+
+def star(y,x,N:int):
+    if N == 3:#더이상 나눌수없을떄 2를 기준으로 나누니까
+        Map[y][x] = "*"
+        Map[y+1][x-1] = "*"
+        Map[y+1][x+1] = "*"
+        Map[y+2][x-2] = "*"
+        Map[y+2][x-1] = "*"
+        Map[y+2][x] = "*"
+        Map[y+2][x+1] = "*"
+        Map[y+2][x+2] = "*"
+        return #더이상 나누면 안된다 
+
+    div = N//2
+    star(y,x,div)
+    star(y+div,x-div,div)
+    star(y+div,x+div,div)
 
 
-for i in picture:
-    print(''.join(i))
-
+star(0, N-1,N)
+    print("".join(myMap[i]))
 
 
 

@@ -1,26 +1,30 @@
-from sys import*
-setrecursionlimit(10**6)
+from sys
 
-def draw(x, y, n):
-   if n == 1:
-       matrix[y][x]='*'
-       return
-   div = int(n/3)            
-   draw(x, y, div)
-   draw(x, y+div, div)
-   draw(x, y+div+div, div)
-   draw(x+div, y, div)
-   draw(x+div, y+div+div, div)
-   draw(x+div+div, y, div)
-   draw(x+div+div, y+div, div)
-   draw(x+div+div, y+div+div, div)
+sys.setrecursiontime(10**9)
+
+
+def star(y,x,N):
+    if N == 1:
+        Map[y][x] = "*"
+        return # 더 이샹 내려가면 안되니까
+    div = N//3
+    star(y,x,div)
+    star(y+div,x,div)
+    star(y+div+div,x,div)
+    star(y,x+div,div)
+    star(y,x+div+div,div)
+    star(y+div,x+div+div,div)
+    star(y+div+div,x+div,div)
+    star(y+div+div,x+div+div,div)    
+#가운데만 빼놓고 전부다
+
+
+
 
 
 
 N = int(input())
-matrix = [[' 'for _ in range(N)] for _ in range(N)]
 
-draw(0,0,N)
-
+Map = [" "*(N) for _ in range(N)]
 for i in range(N):
-  print(''.join(matrix[i]))
+    print("".join(Map[i])) 

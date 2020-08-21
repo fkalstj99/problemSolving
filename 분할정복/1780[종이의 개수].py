@@ -1,106 +1,104 @@
-def nine_tree(x, y, n):
-    global matrix, minus, zero, plus
-    type = matrix[y][x] #첫 타입과 나머지 타입이 같아야함
-    double_break = False #for문 탈출용 double_break
-    
-    for i in range(x, x+n):
-        if double_break:
+def nineTree(y,x,n):
+    value = Map[y][x]
+    tree_break = False
+
+    for i in range(x,x+n):
+        if tree_break:
             break
-            
-        for j in range(y, y+n):
-            if matrix[j][i] != type: #하나라도 틀릴시에 재귀문 생성
+        # N * N 종이의 개수 -> N // 3 * N // 3으로 넘어갔다는 말
+        for j in range(y+n):
+            if not value == Map[i][j]:
                 k = n//3
-                
-                #9분면으로 잘라 실행
-                nine_tree(x, y, k)
-                nine_tree(x + k, y, k)
-                nine_tree(x + 2*k, y, k)
-                nine_tree(x, y + k, k)
-                nine_tree(x + k,  y+ k, k)
-                nine_tree(x + 2*k, y + k, k)
-                nine_tree(x, y + 2*k, k)
-                nine_tree(x + k, y + 2*k, k)
-                nine_tree(x + 2*k, y + 2*k, k)
-                
-                double_break = True #탈출!
+                nine_tree(y, x, k)
+                nine_tree(y + k, x, k)
+                nine_tree(y + 2*k, x, k)
+                nine_tree(y, x + k, k)
+                nine_tree(y + k,  x+ k, k)
+                nine_tree(y + 2*k, x + k, k)
+                nine_tree(y, x + 2*k, k)
+                nine_tree(y + k, x + 2*k, k)
+                nine_tree(y + 2*k, x + 2*k, k)
+
+
+                tree_break = True
+                #tree_break의 존재 -> N * N의 종이에서는 다른 것이 나왔다는 뜻
                 break
-    
-    if not double_break:
-        if matrix[y][x] == -1:
-            minus += 1
-        elif matrix[y][x] == 0:
-            zero += 1
-        else:
-            plus += 1
+
+    if not tree_break:
+        result[str(value)] += 1
+
+
 
 
 N = int(input())
-matrix = []
-minus = 0
-zero = 0
-plus = 0
 
-for _ in range(N):
-    matrix.append(list(map(int, input().split())))
+Map = [list(map(str,input().split())) for _ in range(N)]
 
-
-nine_tree(0,0,N)
-print(minus)
-print(zero)
-print(plus)
+result = {
+    "-1":0,
+    "0": 0,
+    "1":0
+}
 
 
 
-#-----------------------------------------------------------------
+nineTree(0,0,N)
+
+
+
+print(result, end="\n")
+
+
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+def check(y,x,n):
+    value = Map[y][x]
+    for i in range(n):
+        for j in range(n):
+            if value != Map[i][j]:
+                return False
+
+
+
+
+
+def nineTree(y,x,n):
+    
+    if check(y,x,n):
+        result[str(Map[y][x])] += 1
+    else:
+        for i in range(3):
+            for j in range(3):
+                nineTree(y + i*n//3, x + i*n//3, n//3)
+
+
+
+
+
+N = int(input())
+
+Map = [list(map(str,input().split())) for _ in range(N)]
+
+result = {
+    "-1":0,
+    "0": 0,
+    "1":0
+}
+
+
+
+nineTree(0,0,N)
+
+print(result, end="\n")
 
 
 
 
 
 
-import sys 
-
-N = int(sys.stdin.readline())
-
-matrix = [] 
-result = [0] * 3 
-
-for _ in range(N): 
-    matrix.append(list(map(int, sys.stdin.readline().split()))) 
-
-
-def check(start_x: int, start_y: int, n: int): 
-    temp = matrix[start_x][start_y] 
-    for i in range(n): 
-        for j in range(n): 
-            if temp != matrix[start_x + i][start_y + j]: 
-                return False 
-                
-    return True 
-
-
-def divide(start_x: int, start_y: int, n: int): 
-        if check(start_x, start_y, n): 
-            result[matrix[start_x][start_y] + 1] += 1 
-        else: 
-            for i in range(3): 
-                for j in range(3): 
-                    divide(start_x + i* n//3, start_y + j* n//3, n//3) 
-                    #이 부분을 계산을 잘해야함. 칸 옮기고 줄여나가는
-                    
-        return 
-        
-        
-
-
-divide(0, 0, N) 
-
-for i in range(3): 
-    print(result[i])
-
-#https://atez.kagamine.me/12
-
-9
 
 
 풀이
