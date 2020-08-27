@@ -1,48 +1,35 @@
 
-#https://suri78.tistory.com/152
-
-
-1. 완전탐색
-
-import sys
-
-
-input = sys.stdin.readline
-
-def move(now, depth):
-    global charge, ans
+def solve(start, depth):
+    global result, charge
+    #base Condition
     if depth == N:
-        #마지막 깊이일때 -> 1로 회귀하여야 한다. 
-        if matrix[now][0] > 0:
-          # 1로 회귀할때의 값
-            ans = min(ans, charge+matrix[now][0])
-        return
-    
-    visit[now] = True
-    for l in adj_list[now]:
-        if not visit[l]:
-            charge += matrix[now][l]
-            move(l, depth+1)
-            charge -= matrix[now][l]
-    visit[now] = False
+        if matrix[start][0] > 0:
+            answer = min(answer, charge + matrix[start][0])
+            return 
+    #재귀에는 항상 return값이 있어야 한다.
+
+    visit[start] = True
+    for i in range(N):
+        if matrix[start][i] != 0 and visit[i] == False:
+            charge += matrix[start][i]
+            solve(i, depth+1)
+            charge -= matrix[start][i]
+    visit[start] = False 
+#Backtracking할때 항상 기본값으로 돌려줘야 한다. -> 
 
 
 N = int(input())
+#도시 수
 
-matrix = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
-visit = [False]*N
-adj_list = {}
-charge, ans = 0, 10**7
+matrix = [list(map(int,input().split())) for _ in range(N)]
 
+visit = [False] * N
 
-for i in range(N):
-  adj_list[i] = []
-  for j in range(N):
-      if matrix[i][j] > 0:
-         adj_list[i].append(j)
+result, charge = 10**9, 0
 
-move(0,1)
-print(ans)
+solve(0, 1)
+
+print(result)
 
 
 

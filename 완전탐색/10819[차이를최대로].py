@@ -1,17 +1,26 @@
 from itertools import permutations
 
 N = int(input())
-arr = permutations(list(map(int, input().split())))
-answer = 0
+
+arr = permutations(list(map(int,input().split())))
+
 
 
 for i in arr:
     sum = 0
-    for j in range(N-1):
-        sum += abs(i[j] - i[j+1])
-    answer = max(answer, sum)    
+    for j in range(N - 1):
+        sum += arr[j] - arr[j+1]
+    
+    answer = max(answer, sum)
 
 print(answer)
+
+
+
+
+
+
+
 
 
 
@@ -26,6 +35,8 @@ def perm(arr, depth, n, k):
         arr[i], arr[depth] = arr[depth], arr[i] 
         perm(arr, depth + 1, n, k) 
         arr[i], arr[depth] = arr[depth], arr[i]
+
+
 
 
 

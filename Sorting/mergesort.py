@@ -22,11 +22,14 @@ def merge_sort(arr):
         while l < mid:
             temp.append(arr[l])
             l += 1
-        while h < mid:
+        while h < high:
             temp.append(arr[h])
             h += 1
+        #값이 같은 것들 
 
         for i in range(low, high):
             arr[i] = temp[i - low]
 
     return sort(0, len(arr))
+
+https://mong9data.tistory.com/46
